@@ -1,5 +1,14 @@
 
-export default function (nodeName, attributes, ...children) {
+import createElement from './createElement'
+
+export default function vdomjs() {
+
+  return createElement
+}
+
+
+
+export function makeComponent(nodeName, attributes, ...children) {
   return { nodeName, attributes, children }
 }
 
@@ -16,7 +25,7 @@ export const renderNode = vnode => {
     for (let key in attributes) {
       el.setAttribute(key, attributes[key])
     }
-  } else if (typeof nodeName === 'function') { 
+  } else if (typeof nodeName === 'function') {
     const component = new nodeName(attributes)
     el = renderNode(
       component.render(component.props, component.state)
@@ -28,10 +37,7 @@ export const renderNode = vnode => {
   return el
 }
 
-export const renderComponent = (component, parent) => {
-  let rendered = component.render(component.props, component.state)
-  component.base = diff(component.base, rendered)
-}
+
 
 export const diff = (dom, vnode, parent) => {
   if (dom) {
@@ -39,7 +45,7 @@ export const diff = (dom, vnode, parent) => {
       dom.nodeValue = vnode
 
       return dom
-    } 
+    }
     if (typeof vnode.nodeName === 'function') {
       const component = new vnode.nodeName(vnode.attributes)
       const rendered = component.render(component.props, component.state)
