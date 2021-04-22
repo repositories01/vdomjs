@@ -1,4 +1,4 @@
-import vdomjs, { render } from './vdomjs';
+import vdomjs from './vdomjs';
 
 
 const App = () => {
@@ -8,4 +8,4 @@ const App = () => {
 }
 
 
-render(App(), document.querySelector('#root'))
+vdomjs.render(App(), document.querySelector('#root'))
